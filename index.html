@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Prototipe Sistem Keamanan & Perlindungan Privasi Data: Implementasi OTP, QR Code MFA, Enkripsi AES-256-GCM dan Kepatuhan UU PDP.">
+    <meta name="keywords" content="Keamanan Data, Privasi, Enkripsi AES-256, OTP, QR Code, UU PDP, Two Factor Authentication">
+    <meta name="author" content="CyberShield Security Engine">
+    <title>CyberShield - Prototipe Keamanan Data, Privasi, OTP & QR Code</title>
+    
+    <!-- Google Fonts for modern typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="container">
+        <!-- Application Header -->
+        <header class="app-header" id="mainHeader">
+            <div class="brand">
+                <div class="brand-icon" aria-hidden="true">🛡️</div>
+                <div class="brand-info">
+                    <h1>CyberShield Data Vault</h1>
+                    <p>Prototipe Keamanan &amp; Perlindungan Privasi Data (OTP, QR Code &amp; AES-256-GCM)</p>
+                </div>
+            </div>
+            <div class="header-badges">
+                <div class="status-badge" id="badgeZeroTrust">
+                    <span class="pulse-dot"></span>
+                    <span>Zero-Trust Active</span>
+                </div>
+                <div class="status-badge accent" id="badgeUUPDP">
+                    <span>⚖️ Standar UU PDP</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Security Overview Cards -->
+        <section class="security-summary" aria-label="Ringkasan Status Keamanan">
+            <article class="summary-card" id="summaryCardEncryption">
+                <div class="summary-icon">🔐</div>
+                <div class="summary-meta">
+                    <h3>Enkripsi Data</h3>
+                    <p id="statEncryptionMode">AES-256-GCM (100k PBKDF2)</p>
+                </div>
+            </article>
+            <article class="summary-card" id="summaryCardMFA">
+                <div class="summary-icon">📱</div>
+                <div class="summary-meta">
+                    <h3>Autentikasi 2FA</h3>
+                    <p id="stat2FA">OTP &amp; TOTP QR Aktif</p>
+                </div>
+            </article>
+            <article class="summary-card" id="summaryCardVault">
+                <div class="summary-icon">🗄️</div>
+                <div class="summary-meta">
+                    <h3>Data Terproteksi</h3>
+                    <p id="statVaultCount">2 Item Tersimpan</p>
+                </div>
+            </article>
+            <article class="summary-card" id="summaryCardCompliance">
+                <div class="summary-icon">🛡️</div>
+                <div class="summary-meta">
+                    <h3>Skor Privasi Data</h3>
+                    <p id="statPrivacyScore">100% Aman</p>
+                </div>
+            </article>
+        </section>
+
+        <!-- Main Navigation Tabs -->
+        <nav class="tabs-nav" role="tablist" aria-label="Modul Keamanan">
+            <button class="tab-btn active" id="tabBtnEncryption" role="tab" aria-selected="true" aria-controls="tabEncryption" data-tab="tabEncryption">
+                <span class="tab-icon">🔐</span>
+                <span>Enkripsi &amp; Vault Data</span>
+            </button>
+            <button class="tab-btn" id="tabBtnOTP" role="tab" aria-selected="false" aria-controls="tabOTP" data-tab="tabOTP">
+                <span class="tab-icon">📲</span>
+                <span>Autentikasi OTP (2FA)</span>
+            </button>
+            <button class="tab-btn" id="tabBtnQRCode" role="tab" aria-selected="false" aria-controls="tabQRCode" data-tab="tabQRCode">
+                <span class="tab-icon">📷</span>
+                <span>QR Code Security &amp; TOTP</span>
+            </button>
+            <button class="tab-btn" id="tabBtnPrivacyAudit" role="tab" aria-selected="false" aria-controls="tabPrivacyAudit" data-tab="tabPrivacyAudit">
+                <span class="tab-icon">📜</span>
+                <span>Audit Log &amp; UU PDP</span>
+            </button>
+        </nav>
+
+        <!-- Main Workspace -->
+        <main id="mainWorkspace">
+
+            <!-- TAB 1: DATA ENCRYPTION & SECURE VAULT -->
+            <section class="tab-pane active" id="tabEncryption" role="tabpanel" aria-labelledby="tabBtnEncryption">
+                <div class="grid-2">
+                    <!-- Encryption Form Card -->
+                    <div class="glass-card" id="cardEncryptForm">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h2>🔐 Simpan &amp; Enkripsi Data Sensitif</h2>
+                                <p>Melindungi data pribadi at rest menggunakan enkripsi tingkat militer AES-256-GCM.</p>
+                            </div>
+                        </div>
+
+                        <form id="formEncryptData" onsubmit="return false;">
+                            <div class="form-group">
+                                <label for="dataLabel" class="form-label">
+                                    <span>Nama / Keterangan Dokumen</span>
+                                    <span class="input-hint">Contoh: KTP Saya, Rekening Bank</span>
+                                </label>
+                                <input type="text" id="dataLabel" class="form-control" placeholder="Misal: KTP &amp; Rekening Utama" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="dataCategory" class="form-label">
+                                    <span>Kategori Data Pribadi (UU PDP)</span>
+                                </label>
+                                <select id="dataCategory" class="form-control">
+                                    <option value="nik">Identitas Pribadi (NIK / No. KTP)</option>
+                                    <option value="bank">Keuangan (No. Rekening / Kartu Debit)</option>
+                                    <option value="medical">Data Kesehatan / Medis Rahasia</option>
+                                    <option value="credentials">Kredensial &amp; Password Penting</option>
+                                    <option value="general">Catatan Rahasia Umum</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="dataPlaintext" class="form-label">
+                                    <span>Konten Data Sensitif (Plaintext)</span>
+                                    <span class="input-hint">Akan dienkripsi di peramban</span>
+                                </label>
+                                <textarea id="dataPlaintext" class="form-control" rows="3" placeholder="Ketik data sensitif, misal: NIK 3201234567890001, Bank BCA 8271928371 a.n Budi Santoso..." required></textarea>
+                            </div>
+
+                            <!-- PII Masking Switch -->
+                            <div class="switch-group" id="piiSwitchGroup">
+                                <div>
+                                    <span class="switch-label">Aktifkan Masking Privasi (PII Sanitization)</span>
+                                    <span class="switch-desc">Sembunyikan digit sensitif sesuai regulasi UU PDP saat tampilan publik</span>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="toggleMasking" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+
+                            <!-- Masked Preview -->
+                            <div class="form-group" id="maskedPreviewGroup">
+                                <label class="form-label">
+                                    <span>Pratinjau Tampilan Tersamarkan (Masked View):</span>
+                                </label>
+                                <div id="maskedPreviewDisplay" class="form-control mono" style="background: rgba(0,0,0,0.3); color: #38bdf8;">
+                                    (Pratinjau masking akan muncul saat mengetik)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="encryptPassphrase" class="form-label">
+                                    <span>Kunci Rahasia / Passphrase Enkripsi</span>
+                                    <span class="input-hint">PBKDF2 SHA-256 derivation</span>
+                                </label>
+                                <input type="password" id="encryptPassphrase" class="form-control" placeholder="Masukkan password kuat untuk enkripsi..." required>
+                                
+                                <!-- Password Strength Meter -->
+                                <div class="pw-strength-wrapper">
+                                    <div class="pw-strength-bar">
+                                        <div id="pwStrengthFill" class="pw-strength-fill"></div>
+                                    </div>
+                                    <div class="pw-strength-label">
+                                        <span id="pwStrengthText">Kekuatan Kunci: Kosong</span>
+                                        <span id="pwEntropyHint">Rekomendasi: 8+ huruf, angka, simbol</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="button" id="btnEncryptSubmit" class="btn btn-primary btn-block">
+                                <span>🔒 Enkripsi &amp; Simpan ke Secure Vault</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Right Column: Live Crypto Inspector & Vault List -->
+                    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                        <!-- Live Cryptographic Inspector -->
+                        <div class="glass-card" id="cardCryptoInspector">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <h2>🔬 Inspektur Kriptografi (Live Output)</h2>
+                                    <p>Struktur paket terenkripsi AES-256-GCM &amp; integritas SHA-256</p>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                                <div>
+                                    <span class="form-label">Amplop Ciphertext (Base64 Payload):</span>
+                                    <div class="code-inspector" id="inspectorCiphertext">
+                                        <button class="copy-btn-corner" id="btnCopyCipher">Salin</button>
+                                        <span id="textCiphertext">Belum ada enkripsi yang dilakukan. Masukkan data di form sebelah kiri dan klik 'Enkripsi'.</span>
+                                    </div>
+                                </div>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                                    <div>
+                                        <span class="form-label">Salt Kriptografi (PBKDF2):</span>
+                                        <div class="code-inspector" style="height: 55px;" id="textSaltHex">-</div>
+                                    </div>
+                                    <div>
+                                        <span class="form-label">Initialization Vector (IV/Nonce):</span>
+                                        <div class="code-inspector" style="height: 55px;" id="textIvHex">-</div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <span class="form-label">Hash Integritas Asli (SHA-256 Checksum):</span>
+                                    <div class="code-inspector" style="height: 50px;" id="textDataHash">-</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Encrypted Vault Items -->
+                        <div class="glass-card" id="cardVaultList">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <h2>🗄️ Vault Data Terenkripsi</h2>
+                                    <p>Hanya dapat dibuka dengan Passphrase + Verifikasi OTP</p>
+                                </div>
+                                <button class="btn btn-secondary btn-sm" id="btnExportVault">💾 Ekspor Vault</button>
+                            </div>
+
+                            <div class="vault-list" id="vaultContainer">
+                                <!-- Populated dynamically by app.js -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 2: OTP (ONE-TIME PASSWORD) AUTHENTICATION -->
+            <section class="tab-pane" id="tabOTP" role="tabpanel" aria-labelledby="tabBtnOTP">
+                <div class="grid-2">
+                    <!-- OTP Generator & Verification Control -->
+                    <div class="glass-card" id="cardOTPControl">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h2>📲 Simulasi Verifikasi 2FA / OTP</h2>
+                                <p>Sistem perlindungan akses data dengan One-Time Password 6-digit &amp; proteksi anti brute-force.</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="otpChannelSelect" class="form-label">Saluran Pengiriman OTP:</label>
+                            <select id="otpChannelSelect" class="form-control">
+                                <option value="SMS">SMS Gateway (+62 812-****-8899)</option>
+                                <option value="Email">Email Resmi (u***@privatedata.id)</option>
+                                <option value="WhatsApp">WhatsApp OTP Security Channel</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="otpPurpose" class="form-label">Tujuan Otorisasi:</label>
+                            <input type="text" id="otpPurpose" class="form-control" value="Otorisasi Buka Kunci Data Rahasia Vault" readonly>
+                        </div>
+
+                        <button type="button" id="btnRequestOTP" class="btn btn-primary btn-block">
+                            <span>📩 Generate &amp; Kirim Kode OTP</span>
+                        </button>
+
+                        <!-- Simulated SMS / Email Message Preview -->
+                        <div id="simulatedPhoneNotification" style="display: none; margin-top: 1.5rem;">
+                            <div class="sim-sms-box">
+                                <div class="sms-header">
+                                    <span id="smsHeaderTitle">📩 SMS Gateway Security</span>
+                                    <span>Baru Saja</span>
+                                </div>
+                                <div class="sms-body">
+                                    <p>Jangan berikan kode ini kepada siapa pun! Kode verifikasi Anda adalah <span class="sms-code-highlight" id="simulatedCodeText">123456</span>. Berlaku selama 60 detik.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 6-Digit PIN Input Form -->
+                        <div style="margin-top: 1.5rem; text-align: center;">
+                            <label class="form-label" style="justify-content: center;">Masukkan 6-Digit Kode OTP Anda:</label>
+                            <div class="pin-inputs" id="pinInputContainer">
+                                <input type="text" class="pin-digit" maxlength="1" inputmode="numeric" id="pin0" autofocus>
+                                <input type="text" class="pin-digit" maxlength="1" inputmode="numeric" id="pin1">
+                                <input type="text" class="pin-digit" maxlength="1" inputmode="numeric" id="pin2">
+                                <input type="text" class="pin-digit" maxlength="1" inputmode="numeric" id="pin3">
+                                <input type="text" class="pin-digit" maxlength="1" inputmode="numeric" id="pin4">
+                                <input type="text" class="pin-digit" maxlength="1" inputmode="numeric" id="pin5">
+                            </div>
+
+                            <!-- Radial Countdown Timer -->
+                            <div class="timer-radial-wrap" id="otpTimerWrap">
+                                <div class="timer-circle">
+                                    <svg class="timer-svg" width="100" height="100" viewBox="0 0 100 100">
+                                        <circle class="timer-circle-bg" cx="50" cy="50" r="42"></circle>
+                                        <circle class="timer-circle-progress" id="timerProgressRing" cx="50" cy="50" r="42"></circle>
+                                    </svg>
+                                    <div class="timer-text" id="otpTimerLabel">60s</div>
+                                </div>
+                                <span style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;" id="otpTimerStatus">Menunggu pengiriman OTP...</span>
+                            </div>
+
+                            <div style="display: flex; gap: 0.75rem; justify-content: center; margin-top: 1rem;">
+                                <button type="button" id="btnVerifyOTP" class="btn btn-primary" style="flex: 2;">
+                                    <span>✅ Verifikasi OTP Sekarang</span>
+                                </button>
+                                <button type="button" id="btnResendOTP" class="btn btn-secondary" style="flex: 1;" disabled>
+                                    <span>🔄 Kirim Ulang</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- OTP Security Guarantees & Brute Force Monitor -->
+                    <div class="glass-card" id="cardOTPThreats">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h2>🛡️ Mekanisme Perlindungan OTP</h2>
+                                <p>Arsitektur keamanan terhadap serangan Brute-Force &amp; Man-in-the-Middle</p>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            <div style="background: rgba(255, 255, 255, 0.03); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
+                                <h4 style="color: var(--primary); font-size: 0.95rem; margin-bottom: 0.3rem;">⚡ Anti Brute-Force Rate Limiting</h4>
+                                <p style="font-size: 0.82rem; color: var(--text-muted);">
+                                    Sistem membatasi maksimal <strong>3 kali percobaan salah</strong>. Jika melampaui batas, sistem otomatis membekukan (lockdown) verifikasi selama 30 detik untuk menggagalkan bot otomatis.
+                                </p>
+                                <div style="margin-top: 0.6rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem;">
+                                    <span>Sisa Percobaan:</span>
+                                    <span id="attemptsRemainingBadge" style="font-weight: 700; color: var(--success);">3 / 3 Percobaan</span>
+                                </div>
+                            </div>
+
+                            <div style="background: rgba(255, 255, 255, 0.03); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
+                                <h4 style="color: var(--secondary); font-size: 0.95rem; margin-bottom: 0.3rem;">⏳ Single-Use &amp; Time-Bound Token</h4>
+                                <p style="font-size: 0.82rem; color: var(--text-muted);">
+                                    Kode OTP dibuat dengan nilai acak kriptografis (<code>window.crypto.getRandomValues</code>) dan secara otomatis hangus seketika setelah digunakan (One-Time) atau setelah 60 detik kedaluwarsa.
+                                </p>
+                            </div>
+
+                            <div style="background: rgba(255, 255, 255, 0.03); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
+                                <h4 style="color: var(--success); font-size: 0.95rem; margin-bottom: 0.3rem;">🔒 Hubungan OTP dengan Kunci Dekripsi</h4>
+                                <p style="font-size: 0.82rem; color: var(--text-muted);">
+                                    Di sistem CyberShield, data sensitif yang ada di Vault membutuhkan otorisasi OTP yang valid sebelum peramban diizinkan menjalankan proses dekripsi data berharga.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 3: QR CODE SECURITY & MFA BINDING -->
+            <section class="tab-pane" id="tabQRCode" role="tabpanel" aria-labelledby="tabBtnQRCode">
+                <div class="grid-2">
+                    <!-- MFA QR Code Pairing -->
+                    <div class="glass-card" id="cardQRPairing">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h2>📷 Binding 2FA dengan QR Code (TOTP)</h2>
+                                <p>Dukungan aplikasi Google Authenticator, Microsoft Authenticator &amp; Authy</p>
+                            </div>
+                        </div>
+
+                        <div class="qr-preview-wrapper">
+                            <div class="qr-box" id="qrContainerTotp">
+                                <!-- Dynamic SVG QR Code will be inserted here -->
+                            </div>
+                            <div class="qr-secret-key" id="boxTotpSecretKey">
+                                <span>Kunci Manual:</span>
+                                <strong id="textTotpSecret">JBSWY3DPEHPK3PXP</strong>
+                                <button class="btn btn-secondary btn-sm" id="btnCopyTotpSecret" style="padding: 0.2rem 0.5rem;">Salin</button>
+                            </div>
+                            <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.8rem; text-align: center;">
+                                Pindai QR Code di atas menggunakan aplikasi Authenticator ponsel Anda untuk menghubungkan akun.
+                            </p>
+                        </div>
+
+                        <!-- Live Authenticator Simulator -->
+                        <div style="background: rgba(0, 0, 0, 0.4); border-radius: var(--radius-sm); padding: 1rem; border: 1px solid var(--border-subtle);">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <span style="font-size: 0.82rem; font-weight: 600; color: var(--primary);">📲 Simulator Kode Live Authenticator:</span>
+                                <span style="font-size: 0.75rem; color: var(--text-muted);" id="totpTickerCountdown">Berganti dlm 30s</span>
+                            </div>
+                            <div style="display: flex; align-items: center; justify-content: space-between;">
+                                <div id="liveTotpDisplay" style="font-family: var(--font-mono); font-size: 1.8rem; font-weight: 800; letter-spacing: 0.15em; color: #fff;">
+                                    ------
+                                </div>
+                                <button class="btn btn-secondary btn-sm" id="btnFillTotp">Gunakan Kode Ini</button>
+                            </div>
+                        </div>
+
+                        <!-- Verification of TOTP -->
+                        <div style="margin-top: 1.25rem;">
+                            <label for="inputVerifyTotp" class="form-label">Uji Validasi Kode dari Authenticator:</label>
+                            <div style="display: flex; gap: 0.75rem;">
+                                <input type="text" id="inputVerifyTotp" class="form-control mono" placeholder="6 Digit TOTP (misal: 482910)" maxlength="6">
+                                <button type="button" id="btnCheckTotp" class="btn btn-primary" style="white-space: nowrap;">
+                                    Verifikasi TOTP
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Secure Encrypted QR Code Generator & Scanner Simulator -->
+                    <div class="glass-card" id="cardEncryptedQR">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h2>🛡️ QR Code Payload Terenkripsi</h2>
+                                <p>Kirimkan data rahasia offline melalui QR Code yang hanya bisa dibaca dengan password.</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="qrSecretPayloadText" class="form-label">Pesan / Token Rahasia yang Ingin Dimasukkan ke QR:</label>
+                            <input type="text" id="qrSecretPayloadText" class="form-control" value="SESI-RAHASIA#USER-8291#TIKET-KEAMANAN-TERVERIFIKASI">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="qrSecretPassphrase" class="form-label">Kunci Enkripsi QR:</label>
+                            <input type="password" id="qrSecretPassphrase" class="form-control" placeholder="Passphrase pengunci QR code..." value="KunciRahasiaQR123!">
+                        </div>
+
+                        <button type="button" id="btnGenerateEncryptedQR" class="btn btn-primary btn-block">
+                            <span>⚡ Generate QR Code Terenkripsi</span>
+                        </button>
+
+                        <div class="qr-preview-wrapper" style="margin-top: 1.25rem;">
+                            <div class="qr-box" id="qrContainerEncrypted">
+                                <!-- Dynamic Encrypted QR Code -->
+                            </div>
+                            <span style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;" id="qrEncryptedPayloadLength">
+                                Payload: Terenkripsi AES-256-GCM
+                            </span>
+                        </div>
+
+                        <!-- Scanner & Decryptor Simulator -->
+                        <div style="background: rgba(255, 255, 255, 0.02); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
+                            <h4 style="font-size: 0.88rem; color: #fff; margin-bottom: 0.5rem;">🔍 Simulator Pindai &amp; Dekripsi QR</h4>
+                            <div style="display: flex; gap: 0.5rem; margin-bottom: 0.75rem;">
+                                <input type="password" id="qrDecryptKeyInput" class="form-control" placeholder="Masukkan kunci untuk membaca QR...">
+                                <button type="button" id="btnScanAndDecryptQR" class="btn btn-secondary" style="white-space: nowrap;">Buka QR</button>
+                            </div>
+                            <div id="qrDecryptedResult" class="code-inspector" style="height: 60px; color: #10b981;">
+                                Hasil dekripsi QR akan tampil di sini.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 4: AUDIT LOG & UU PDP PRIVACY COMPLIANCE -->
+            <section class="tab-pane" id="tabPrivacyAudit" role="tabpanel" aria-labelledby="tabBtnPrivacyAudit">
+                <div class="grid-2">
+                    <!-- Live Security Event Audit Console -->
+                    <div class="glass-card" id="cardAuditTrail">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h2>📜 Audit Log Keamanan Real-Time</h2>
+                                <p>Pencatatan setiap akses, pembuatan OTP, dan proses enkripsi/dekripsi secara transparan.</p>
+                            </div>
+                            <button class="btn btn-secondary btn-sm" id="btnClearAuditLogs">Bersihkan Log</button>
+                        </div>
+
+                        <div class="audit-console" id="auditConsoleContainer">
+                            <!-- Populated dynamically by app.js -->
+                        </div>
+                    </div>
+
+                    <!-- UU PDP & Privacy Compliance Dashboard -->
+                    <div class="glass-card" id="cardComplianceDashboard">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h2>⚖️ Kepatuhan UU Perlindungan Data Pribadi (UU PDP)</h2>
+                                <p>Kesesuaian implementasi teknis dengan Undang-Undang No. 27 Tahun 2022</p>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+                                <span style="font-size: 1.3rem;">✅</span>
+                                <div>
+                                    <h4 style="font-size: 0.92rem; color: #fff;">Prinsip Kerahasiaan &amp; Enkripsi End-to-End (Pasal 35)</h4>
+                                    <p style="font-size: 0.8rem; color: var(--text-muted);">
+                                        Pengendali data wajib melindungi data pribadi dari pemrosesan tidak sah menggunakan kriptografi kuat (AES-256-GCM) sehingga pihak ketiga tidak dapat membaca data mentah.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+                                <span style="font-size: 1.3rem;">✅</span>
+                                <div>
+                                    <h4 style="font-size: 0.92rem; color: #fff;">Autentikasi Bertingkat (MFA / 2FA)</h4>
+                                    <p style="font-size: 0.8rem; color: var(--text-muted);">
+                                        Akses terhadap data sensitif dilindungi dengan otentikasi ganda menggunakan One-Time Password (OTP) dan TOTP QR Code untuk mencegah pengambilalihan akun.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+                                <span style="font-size: 1.3rem;">✅</span>
+                                <div>
+                                    <h4 style="font-size: 0.92rem; color: #fff;">Hak Penghapusan Data / Right to be Forgotten (Pasal 8)</h4>
+                                    <p style="font-size: 0.8rem; color: var(--text-muted);">
+                                        Subjek data berhak mengakhiri pemrosesan dan menghapus data pribadinya secara permanen dari sistem vault melalui tombol 'Hapus Data' kapan saja.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+                                <span style="font-size: 1.3rem;">✅</span>
+                                <div>
+                                    <h4 style="font-size: 0.92rem; color: #fff;">Penyamaran Data Sensitif / PII Masking (Pasal 36)</h4>
+                                    <p style="font-size: 0.8rem; color: var(--text-muted);">
+                                        Fitur masking otomatis menyamarkan angka sensitif pada NIK, Rekening Bank, dan Nomor Kontak saat ditampilkan pada antarmuka publik.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-size: 0.85rem; color: var(--text-muted);">Status Sertifikasi Sistem:</span>
+                            <span class="status-badge" style="background: rgba(16, 185, 129, 0.2);">Zero-Knowledge Ready</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Decryption & 2FA Modal Dialog -->
+        <div class="modal-overlay" id="decryptModal">
+            <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+                <div class="modal-header">
+                    <h3 id="modalTitle" style="font-size: 1.15rem; color: #fff;">🔓 Buka Kunci &amp; Dekripsi Data Vault</h3>
+                    <button class="modal-close" id="btnModalClose" aria-label="Tutup Dialog">&times;</button>
+                </div>
+                
+                <div style="margin-bottom: 1.25rem;">
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">
+                        Item: <strong id="modalItemLabel" style="color: #fff;">-</strong>
+                    </p>
+                    <div class="form-group">
+                        <label for="modalDecryptPassword" class="form-label">Masukkan Passphrase Enkripsi:</label>
+                        <input type="password" id="modalDecryptPassword" class="form-control" placeholder="Passphrase yang digunakan saat enkripsi..." required>
+                    </div>
+
+                    <!-- 2FA OTP Security Requirement in Modal -->
+                    <div style="background: rgba(6, 182, 212, 0.08); border: 1px solid rgba(6, 182, 212, 0.2); padding: 0.85rem; border-radius: var(--radius-sm); margin-bottom: 1rem;">
+                        <span style="font-size: 0.8rem; color: var(--primary); font-weight: 600; display: block; margin-bottom: 0.3rem;">
+                            🛡️ Otorisasi 2FA Diperlukan:
+                        </span>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <input type="text" id="modalOtpCode" class="form-control mono" placeholder="6-Digit OTP / TOTP..." maxlength="6">
+                            <button type="button" class="btn btn-secondary btn-sm" id="btnModalQuickOtp">Gunakan OTP Aktif</button>
+                        </div>
+                    </div>
+
+                    <div id="modalDecryptedOutputGroup" style="display: none; margin-top: 1rem;">
+                        <label class="form-label" style="color: var(--success);">Konten Asli Berhasil Didekripsi:</label>
+                        <div class="code-inspector" id="modalDecryptedContent" style="color: #34d399; max-height: 140px;">-</div>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; gap: 0.75rem;">
+                    <button type="button" class="btn btn-secondary" id="btnModalCancel">Tutup</button>
+                    <button type="button" class="btn btn-primary" id="btnModalSubmitDecrypt">🔓 Dekripsi Sekarang</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast Notification Container -->
+        <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+        <!-- Footer -->
+        <footer style="margin-top: 3.5rem; text-align: center; color: var(--text-dim); font-size: 0.82rem;">
+            <p>CyberShield Security Prototype &bull; Perlindungan Data &amp; Privasi Berbasis Web Crypto API, OTP &amp; QR Code</p>
+            <p style="margin-top: 0.3rem;">Sesuai Standar UU No. 27 Tahun 2022 tentang Pelindungan Data Pribadi (UU PDP)</p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/qrcode-lib.js"></script>
+    <script src="js/crypto-engine.js"></script>
+    <script src="js/otp-manager.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

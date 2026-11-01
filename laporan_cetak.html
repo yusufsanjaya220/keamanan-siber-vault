@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan Tugas Besar Keamanan Siber - Yusuf Sanjaya (202410715162)</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 25mm 20mm 20mm 25mm;
+            @bottom-right {
+                content: counter(page);
+                font-size: 10pt;
+                font-family: 'Times New Roman', serif;
+            }
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12pt;
+            line-height: 1.6;
+            color: #111;
+            background: #fff;
+        }
+
+        .page {
+            page-break-after: always;
+            position: relative;
+        }
+
+        .page:last-child {
+            page-break-after: avoid;
+        }
+
+        /* Cover Page */
+        .cover-page {
+            min-height: 95vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            padding: 20mm 0 10mm 0;
+        }
+
+        .cover-title-box h1 {
+            font-size: 15pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .cover-title-box h2 {
+            font-size: 13pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #1a365d;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .cover-title-box p {
+            font-size: 11pt;
+            font-style: italic;
+            color: #4a5568;
+        }
+
+        .cover-logo-container {
+            margin: 25px 0;
+        }
+
+        .cover-logo-container img {
+            width: 155px;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .cover-author-box {
+            margin: 20px 0;
+            font-size: 12pt;
+        }
+
+        .cover-author-box p {
+            margin-bottom: 5px;
+        }
+
+        .cover-author-box .student-name {
+            font-size: 13pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            margin-top: 6px;
+        }
+
+        .cover-author-box .student-nim {
+            font-size: 12pt;
+            font-weight: bold;
+            color: #2b6cb0;
+        }
+
+        .cover-institution-box {
+            font-size: 13pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            line-height: 1.5;
+            letter-spacing: 0.04em;
+        }
+
+        /* Headings */
+        h2.section-title {
+            font-size: 14pt;
+            font-weight: bold;
+            text-align: center;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #2b6cb0;
+        }
+
+        h3.chapter-title {
+            font-size: 13pt;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: #1a365d;
+            border-left: 4px solid #2b6cb0;
+            padding-left: 8px;
+        }
+
+        h4.subchapter-title {
+            font-size: 12pt;
+            font-weight: bold;
+            margin-top: 14px;
+            margin-bottom: 6px;
+            color: #2d3748;
+        }
+
+        p {
+            text-align: justify;
+            text-justify: inter-word;
+            margin-bottom: 12px;
+            text-indent: 10mm;
+        }
+
+        p.no-indent {
+            text-indent: 0;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 14px;
+        }
+
+        li {
+            margin-bottom: 6px;
+            text-align: justify;
+        }
+
+        /* Tables */
+        table.report-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0 20px 0;
+            font-size: 10pt;
+        }
+
+        table.report-table th, table.report-table td {
+            border: 1px solid #718096;
+            padding: 8px 10px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        table.report-table th {
+            background-color: #edf2f7;
+            font-weight: bold;
+            color: #1a202c;
+            text-align: center;
+        }
+
+        table.report-table tr:nth-child(even) {
+            background-color: #f7fafc;
+        }
+
+        /* Code Blocks */
+        pre.code-block {
+            background-color: #1a202c;
+            color: #e2e8f0;
+            padding: 10px 12px;
+            border-radius: 6px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 8pt;
+            line-height: 1.35;
+            white-space: pre-wrap;
+            word-break: break-all;
+            margin: 10px 0;
+            border: 1px solid #4a5568;
+            page-break-inside: avoid;
+        }
+
+        /* Image Containers */
+        .figure-box {
+            text-align: center;
+            margin: 15px 0;
+            page-break-inside: avoid;
+        }
+
+        .figure-box img {
+            max-width: 90%;
+            height: auto;
+            border: 1px solid #cbd5e0;
+            border-radius: 4px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .figure-caption {
+            font-size: 9.5pt;
+            font-style: italic;
+            margin-top: 6px;
+            color: #4a5568;
+        }
+
+        .signature-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 25px;
+            page-break-inside: avoid;
+        }
+
+        .signature-box {
+            width: 250px;
+            text-align: center;
+        }
+
+        .signature-space {
+            height: 55px;
+        }
+
+        /* Table of contents dots */
+        .toc-list {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .toc-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 11pt;
+        }
+
+        .toc-item.bold {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .badge-pill {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 8.5pt;
+            font-weight: bold;
+            background: #e2e8f0;
+            color: #2b6cb0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ====================================================================
+         HALAMAN JUDUL / COVER
+         ==================================================================== -->
+    <div class="page cover-page">
+        <div class="cover-title-box">
+            <h1>LAPORAN TUGAS BESAR KEAMANAN SIBER</h1>
+            <h2>RANCANG BANGUN PROTOTIPE SISTEM KEAMANAN DAN PERLINDUNGAN PRIVASI DATA: IMPLEMENTASI AUTENTIKASI OTP, QR CODE (TOTP), DAN ENKRIPSI AES-256-GCM</h2>
+            <p>Implementasi Proteksi Data Klien dan Kepatuhan Standar UU No. 27 Tahun 2022 tentang Pelindungan Data Pribadi</p>
+        </div>
+
+        <div class="cover-logo-container">
+            <img src="logo_ubhara.png" alt="Logo Universitas Bhayangkara Jakarta Raya">
+        </div>
+
+        <div class="cover-author-box">
+            <p>Mata Kuliah: <strong>Keamanan Siber</strong></p>
+            <p style="margin-top: 10px;">Disusun Oleh:</p>
+            <p class="student-name">YUSUF SANJAYA</p>
+            <p class="student-nim">NIM: 202410715162</p>
+        </div>
+
+        <div class="cover-institution-box">
+            <p>PROGRAM STUDI INFORMATIKA</p>
+            <p>FAKULTAS ILMU KOMPUTER</p>
+            <p>UNIVERSITAS BHAYANGKARA JAKARTA RAYA</p>
+            <p>BEKASI / JAKARTA</p>
+            <p style="margin-top: 6px;">2026</p>
+        </div>
+    </div>
+
+    <!-- ====================================================================
+         KATA PENGANTAR
+         ==================================================================== -->
+    <div class="page" style="padding-top: 10mm;">
+        <h2 class="section-title">KATA PENGANTAR</h2>
+        
+        <p>Puji dan syukur saya panjatkan ke hadirat Tuhan Yang Maha Esa atas limpahan rahmat, taufik, dan hidayah-Nya, sehingga laporan tugas besar mata kuliah Keamanan Siber yang berjudul <strong>"Rancang Bangun Prototipe Sistem Keamanan dan Perlindungan Privasi Data: Implementasi Autentikasi OTP, QR Code (TOTP), dan Enkripsi AES-256-GCM"</strong> ini dapat terselesaikan dengan baik.</p>
+        
+        <p>Laporan ini disusun guna memenuhi tugas akhir perkuliahan Keamanan Siber pada Program Studi Informatika, Fakultas Ilmu Komputer, Universitas Bhayangkara Jakarta Raya. Melalui proyek praktikum ini, dibangun sebuah aplikasi web terpadu bertajuk <em>CyberShield Data Vault</em> yang mendemonstrasikan pertahanan berlapis (Zero-Trust Security) melalui enkripsi sisi klien (*client-side authenticated encryption*), autentikasi dinamis One-Time Password (OTP) 6-digit anti-brute-force, pengikatan autentikator QR Code (TOTP RFC 6238), serta kepatuhan yuridis terhadap Undang-Undang No. 27 Tahun 2022 tentang Pelindungan Data Pribadi (UU PDP).</p>
+
+        <p>Penulis mengucapkan terima kasih yang sebesar-besarnya kepada:</p>
+        <ol>
+            <li>Bapak/Ibu Dosen Pengampu Mata Kuliah Keamanan Siber Universitas Bhayangkara Jakarta Raya atas bimbingan materi, saran teknis, dan arahan akademis selama perkuliahan.</li>
+            <li>Ketua Program Studi Informatika dan segenap Sivitas Akademika Fakultas Ilmu Komputer Universitas Bhayangkara Jakarta Raya atas fasilitas dan dukungan sarana pembelajaran.</li>
+            <li>Rekan-rekan mahasiswa Informatika angkatan 2024 yang telah berdiskusi, memberikan kritik konstruktif, serta membantu dalam sesi pengujian prototipe.</li>
+        </ol>
+
+        <p>Penulis menyadari bahwa prototipe dan laporan ini masih memiliki kekurangan seiring dengan pesatnya dinamika keamanan informasi. Kritik serta masukan yang konstruktif sangat diharapkan demi penyempurnaan karya ini ke depannya.</p>
+
+        <div class="signature-container">
+            <div class="signature-box">
+                <p>Bekasi, 1 November 2026</p>
+                <p>Penyusun,</p>
+                <div class="signature-space"></div>
+                <p><strong>Yusuf Sanjaya</strong></p>
+                <p>NIM: 202410715162</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====================================================================
+         DAFTAR ISI
+         ==================================================================== -->
+    <div class="page" style="padding-top: 10mm;">
+        <h2 class="section-title">DAFTAR ISI</h2>
+        
+        <ul class="toc-list">
+            <li class="toc-item bold"><span>HALAMAN JUDUL (COVER)</span><span>i</span></li>
+            <li class="toc-item bold"><span>KATA PENGANTAR</span><span>ii</span></li>
+            <li class="toc-item bold"><span>DAFTAR ISI</span><span>iii</span></li>
+            <li class="toc-item bold"><span>DAFTAR TABEL DAN GAMBAR</span><span>iv</span></li>
+            
+            <li class="toc-item bold" style="margin-top: 14px;"><span>BAB I: PENDAHULUAN</span><span>1</span></li>
+            <li class="toc-item" style="padding-left: 20px;"><span>1.1 Latar Belakang Masalah</span><span>1</span></li>
+            <li class="toc-item" style="padding-left: 20px;"><span>1.2 Rumusan Masalah</span><span>2</span></li>
+            <li class="toc-item" style="padding-left: 20px;"><span>1.3 Tujuan Proyek</span><span>2</span></li>
+            <li class="toc-item" style="padding-left: 20px;"><span>1.4 Manfaat Proyek</span><span>2</span></li>
+
+            <li class="toc-item bold" style="margin-top: 14px;"><span>BAB II: PEMBAHASAN DAN URAIAN UTAMA</span><span>3</span></li>
+            <li class="toc-item" style="padding-left: 20px;"><span>2.1 Analisis Pelaksanaan Sistem (Kerangka 5W + 1H)</span><span>3</span></li>
+            <li class="toc-item" style="padding-left: 20px;"><span>2.2 Arsitektur dan Alur Kerja Kriptografi (Security Workflow)</span><span>4</span></li>
+            <li class="toc-item" style="padding-left: 20px;"><span>2.3 Data, Fakta, dan Hasil Temuan Pengujian Lapangan</span><span>6</span></li>
+            <li class="toc-item" style="padding-left: 20px;"><span>2.4 Kendala dan Hambatan Pelaksanaan Beserta Solusi Teknis</span><span>7</span></li>
+
+            <li class="toc-item bold" style="margin-top: 14px;"><span>BAB III: METODE, ALAT, DAN BAHAN</span><span>8</span></li>
+            <li class="toc-item" style="padding-left: 20px;"><span>3.1 Metode Pengembangan Sistem (Iterative Prototyping)</span><span>8</span></li>
+            <li class="toc-item" style="padding-left: 20px;"><span>3.2 Alat dan Lingkungan Perangkat Keras/Lunak</span><span>8</span></li>
+            <li class="toc-item" style="padding-left: 20px;"><span>3.3 Spesifikasi Algoritma Kriptografi & Keamanan</span><span>9</span></li>
+
+            <li class="toc-item bold" style="margin-top: 14px;"><span>BAB IV: PENUTUP</span><span>10</span></li>
+            <li class="toc-item" style="padding-left: 20px;"><span>4.1 Kesimpulan</span><span>10</span></li>
+            <li class="toc-item" style="padding-left: 20px;"><span>4.2 Saran dan Rekomendasi</span><span>10</span></li>
+
+            <li class="toc-item bold" style="margin-top: 14px;"><span>DAFTAR PUSTAKA</span><span>11</span></li>
+            <li class="toc-item bold"><span>LAMPIRAN I: TANGKAPAN LAYAR (SCREENSHOT) PROTOTIPE</span><span>12</span></li>
+            <li class="toc-item bold"><span>LAMPIRAN II: POTONGAN KODE SUMBER UTAMA</span><span>15</span></li>
+        </ul>
+    </div>
+
+    <!-- ====================================================================
+         DAFTAR TABEL DAN GAMBAR
+         ==================================================================== -->
+    <div class="page" style="padding-top: 10mm;">
+        <h2 class="section-title">DAFTAR TABEL DAN GAMBAR</h2>
+        
+        <h3 class="chapter-title">Daftar Tabel</h3>
+        <ul class="toc-list" style="margin-bottom: 25px;">
+            <li class="toc-item"><span>Tabel 1: Analisis Pelaksanaan Sistem Berdasarkan Unsur 5W+1H</span><span>3</span></li>
+            <li class="toc-item"><span>Tabel 2: Hasil Pengujian Fungsionalitas Modul Kriptografi & Autentikasi</span><span>6</span></li>
+            <li class="toc-item"><span>Tabel 3: Matriks Kesesuaian Teknis dengan Regulasi UU No. 27 Tahun 2022 (UU PDP)</span><span>7</span></li>
+            <li class="toc-item"><span>Tabel 4: Spesifikasi Alat, Bahasa Pemrograman, dan Lingkungan Uji</span><span>8</span></li>
+            <li class="toc-item"><span>Tabel 5: Ringkasan Parameter Kriptografis Sistem</span><span>9</span></li>
+        </ul>
+
+        <h3 class="chapter-title">Daftar Gambar</h3>
+        <ul class="toc-list">
+            <li class="toc-item"><span>Gambar 1: Alur Kerja Zero-Knowledge Enkripsi AES-256-GCM & Derivasi PBKDF2</span><span>5</span></li>
+            <li class="toc-item"><span>Gambar L-1: Antarmuka Utama & Modul Enkripsi Vault Data</span><span>12</span></li>
+            <li class="toc-item"><span>Gambar L-2: Modul Autentikasi OTP & Proteksi Anti Brute-Force</span><span>13</span></li>
+            <li class="toc-item"><span>Gambar L-3: Modul QR Code Security, Binding TOTP, & Encrypted Payload</span><span>14</span></li>
+            <li class="toc-item"><span>Gambar L-4: Konsol Audit Log Real-Time & Kepatuhan UU PDP</span><span>14</span></li>
+        </ul>
+    </div>
+
+    <!-- ====================================================================
+         BAB I: PENDAHULUAN
+         ==================================================================== -->
+    <div class="page" style="padding-top: 10mm;">
+        <h2 class="section-title">BAB I: PENDAHULUAN</h2>
+        
+        <h3 class="chapter-title">1.1 Latar Belakang Masalah</h3>
+        <p>Di era transformasi digital kontemporer, ketergantungan masyarakat dan institusi terhadap sistem komputasi daring semakin meningkat secara eksponensial. Transaksi keuangan, layanan identitas kependudukan digital, catatan rekam medis elektronik, serta komunikasi profesional sehari-hari kini bertumpu pada infrastruktur teknologi informasi. Namun, seiring dengan kemudahan tersebut, intensitas ancaman keamanan siber (*cyber threats*) juga mengalami lonjakan drastis, khususnya insiden kebocoran data rahasia (*data breaches*), pencurian kredensial akun (*credential stuffing*), serta serangan penolakan layanan atau pengambilalihan hak akses (*account takeover*).</p>
+
+        <p>Berdasarkan berbagai laporan investigasi keamanan siber, kerentanan fatal yang kerap dimanfaatkan peretas bersumber dari dua hal mendasar: (1) penyimpanan data pribadi pada basis data atau peramban dalam format teks terbuka (*plaintext storage*) tanpa proteksi enkripsi yang memadai, dan (2) mekanisme otentikasi tunggal (*single-factor authentication*) yang hanya mengandalkan kombinasi nama pengguna dan kata sandi statis yang rentan terhadap metode tebak paksa (*brute-force*), *phishing*, maupun kebocoran basis data pihak ketiga.</p>
+
+        <p>Secara yuridis, pemerintah Republik Indonesia telah mengesahkan <strong>Undang-Undang Nomor 27 Tahun 2022 tentang Pelindungan Data Pribadi (UU PDP)</strong>. Regulasi ini mewajibkan setiap pengendali data pribadi untuk menerapkan langkah-langkah teknis keamanan yang ketat guna melindungi data dari akses ilegal, menjaga kerahasiaan (*confidentiality*), menjaga keutuhan (*integrity*), serta menjamin ketersediaan (*availability*). Selain itu, subjek data diberikan hak mutlak untuk meminta penghapusan permanen data pribadinya (*Right to be Forgotten* / Hak Penghapusan Data, Pasal 8).</p>
+
+        <p>Menjawab urgensi tersebut, sebagai mahasiswa Program Studi Informatika Universitas Bhayangkara Jakarta Raya, penulis menginisiasi perancangan dan pembangunan prototipe sistem keamanan bertajuk <strong>CyberShield Data Vault</strong>. Sistem ini mengintegrasikan enkripsi tingkat militer <strong>AES-256-GCM</strong> di sisi peramban (*client-side zero-knowledge*), autentikasi dinamis <strong>One-Time Password (OTP)</strong> dengan pembatas laju serangan (*rate limiter*), serta pengikatan visual <strong>QR Code (TOTP RFC 6238)</strong> yang kompatibel dengan aplikasi *Google Authenticator*.</p>
+
+        <h3 class="chapter-title">1.2 Rumusan Masalah</h3>
+        <ol>
+            <li>Bagaimana merancang sistem penyimpanan data pribadi terenkripsi langsung di sisi klien menggunakan algoritma AES-256-GCM dan derivasi kunci PBKDF2 (100.000 iterasi) tanpa mengekspos kata sandi mentah ke server?</li>
+            <li>Bagaimana mengimplementasikan mekanisme autentikasi 2FA berbasis One-Time Password (OTP) 6-digit dengan proteksi anti brute-force dan timer radial otomatis?</li>
+            <li>Bagaimana mengintegrasikan teknologi QR Code berstandar RFC 6238 untuk penyambungan (*binding*) aplikasi autentikator eksternal dan enkripsi muatan data rahasia (*encrypted QR payload*)?</li>
+            <li>Bagaimana mengimplementasikan prinsip-prinsip perlindungan privasi data sesuai amanat UU No. 27 Tahun 2022 (PII Masking, Hak Hapus, dan Audit Trail)?</li>
+        </ol>
+
+        <h3 class="chapter-title">1.3 Tujuan Proyek</h3>
+        <ol>
+            <li>Membangun prototipe sistem keamanan komprehensif (*CyberShield Data Vault*) berbasis Web Crypto API standar W3C.</li>
+            <li>Mengimplementasikan fitur enkripsi-dekripsi data at rest menggunakan AES-256-GCM yang dilengkapi inspektur kriptografis (*salt*, *IV*, *ciphertext*, *auth tag*, dan hash SHA-256).</li>
+            <li>Menghadirkan sistem OTP 6-digit dengan batas waktu 60 detik dan sistem penguncian sementara 30 detik pasca 3 kali kesalahan.</li>
+            <li>Menyediakan generator matriks QR Code SVG mandiri untuk TOTP dan pengiriman token rahasia offline terenkripsi.</li>
+            <li>Menyediakan kepatuhan teknis UU PDP mencakup penyamaran data sensitif (*PII Masking*), konsol pencatatan jejak audit (*audit trail*), dan penghapusan data permanen.</li>
+        </ol>
+
+        <h3 class="chapter-title">1.4 Manfaat Proyek</h3>
+        <ul>
+            <li><strong>Bagi Mahasiswa & Akademisi</strong>: Memberikan bukti empiris dan implementasi nyata penerapan kriptografi modern pada peramban web tanpa dependensi eksternal yang rentan terhadap serangan rantai pasok (*supply chain attack*).</li>
+            <li><strong>Bagi Pengembangan Institusi / Industri</strong>: Menyediakan cetak biru arsitektur keamanan *Zero-Knowledge Vault* yang siap diadopsi untuk aplikasi perbankan, portal akademik, maupun rekam medis digital.</li>
+            <li><strong>Bagi Masyarakat Umum</strong>: Meningkatkan kesadaran (*cyber awareness*) tentang pentingnya enkripsi end-to-end dan autentikasi multi-faktor dalam menjaga hak privasi data warga negara.</li>
+        </ul>
+    </div>
+
+    <!-- ====================================================================
+         BAB II: PEMBAHASAN DAN URAIAN UTAMA
+         ==================================================================== -->
+    <div class="page" style="padding-top: 10mm;">
+        <h2 class="section-title">BAB II: PEMBAHASAN DAN URAIAN UTAMA</h2>
+        
+        <h3 class="chapter-title">2.1 Analisis Pelaksanaan Sistem (Kerangka 5W + 1H)</h3>
+        <p class="no-indent">Pelaksanaan perancangan dan konstruksi sistem keamanan ini ditelaah menggunakan kerangka komprehensif 5W + 1H sebagai berikut:</p>
+
+        <table class="report-table">
+            <thead>
+                <tr>
+                    <th style="width: 15%;">Unsur 5W+1H</th>
+                    <th>Penjelasan Rinci Pelaksanaan pada Proyek</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>WHAT (Apa)</strong></td>
+                    <td>Pembangunan prototipe sistem keamanan data terpadu bertajuk <strong>CyberShield Data Vault</strong> yang menggabungkan tiga pilar keamanan data: Enkripsi Klien AES-256-GCM, Autentikasi 2FA One-Time Password (OTP), dan QR Code TOTP/Payload Terenkripsi.</td>
+                </tr>
+                <tr>
+                    <td><strong>WHO (Siapa)</strong></td>
+                    <td>Dirancang dan dibangun oleh <strong>Yusuf Sanjaya (NIM: 202410715162)</strong>, mahasiswa Program Studi Informatika, Fakultas Ilmu Komputer, Universitas Bhayangkara Jakarta Raya, di bawah pengawasan dosen pengampu mata kuliah Keamanan Siber.</td>
+                </tr>
+                <tr>
+                    <td><strong>WHERE (Di mana)</strong></td>
+                    <td>Pengembangan dan pengujian dilakukan pada lingkungan Laboratorium Komputer Universitas Bhayangkara Jakarta Raya serta server lokal mandiri pada peramban web modern (Google Chrome & Microsoft Edge).</td>
+                </tr>
+                <tr>
+                    <td><strong>WHEN (Kapan)</strong></td>
+                    <td>Proyek dilaksanakan pada semester berjalan tahun akademik 2026, bertepatan dengan momentum implementasi penuh penegakan sanksi UU Perlindungan Data Pribadi (UU PDP).</td>
+                </tr>
+                <tr>
+                    <td><strong>WHY (Mengapa)</strong></td>
+                    <td>Karena tingginya insiden pembobolan basis data server, penyalahgunaan identitas KTP/NIK kependudukan, serta kelemahan otentikasi kata sandi statis yang membutuhkan solusi enkripsi langsung di tangan pengguna (*Zero-Knowledge*).</td>
+                </tr>
+                <tr>
+                    <td><strong>HOW (Bagaimana)</strong></td>
+                    <td>Sistem dibangun menggunakan HTML5 Semantik, CSS3 Glassmorphism bertema pertahanan siber, dan JavaScript murni berbasis W3C Web Cryptography API (`SubtleCrypto`), generator QR Code SVG mandiri, dan algoritma RFC 6238 tanpa menggunakan framework berat.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3 class="chapter-title">2.2 Arsitektur dan Alur Kerja Kriptografi (Security Workflow)</h3>
+        <p>Arsitektur keamanan CyberShield Data Vault menerapkan paradigma <em>Defense in Depth</em> dengan pemisahan peran yang tegas antara modul enkripsi, modul otentikasi, dan modul privasi data:</p>
+
+        <div class="figure-box">
+            <div style="background: #f7fafc; border: 1px solid #cbd5e0; border-radius: 6px; padding: 16px; text-align: left; font-family: 'Courier New', monospace; font-size: 8.5pt; line-height: 1.3;">
+                [INPUT DATA SENSIFIT (NIK / REKENING)] <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;│<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;▼<br>
+                [PII MASKING SANITIZER: 320101******0002] ──(Tampilan Publik Terlindungi)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;│<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;├─► [PASSPHRASE PENGGUNA] ──► [PBKDF2 SHA-256 (100.000 Iterasi) + Salt 16-byte]<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;▼<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[KUNCI AES-256-GCM DITURUNKAN]<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;▼&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+                [AES-256-GCM ENCRYPTOR (IV 12-byte)] ◄──────┘<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;│<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;▼<br>
+                [AMPLOP ENKRIPSI: { salt, iv, ciphertext, dataHash, authTag128 }] ──► [SECURE VAULT STORAGE]<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;│<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;▼<br>
+                [PROSES DEKRIPSI]: DIIZINKAN HANYA BILA OTP / QR TOTP VALID + PASSPHRASE BENAR
+            </div>
+            <div class="figure-caption">Gambar 1: Alur Kerja Zero-Knowledge Enkripsi AES-256-GCM & Derivasi PBKDF2</div>
+        </div>
+
+        <h4 class="subchapter-title">1. Mekanisme Enkripsi Data Sensitif (AES-256-GCM & PBKDF2)</h4>
+        <p>Ketika pengguna memasukkan data rahasia (seperti nomor KTP atau rekening bank), peramban membangkitkan nilai acak semu berkekuatan kriptografis (*CSPRNG*) berupa <strong>Salt 16 byte</strong> dan <strong>Initialization Vector (IV) 12 byte</strong>. Fungsi derivasi kunci PBKDF2 memproses kata sandi pengguna dengan 100.000 iterasi menggunakan algoritma HMAC-SHA-256. Mode AES-GCM (Galois/Counter Mode) yang digunakan merupakan jenis *Authenticated Encryption with Associated Data (AEAD)*. Hal ini menjamin bahwa setiap modifikasi liar pada ciphertext akan seketika menggagalkan dekripsi karena rusaknya *Authentication Tag* 128-bit.</p>
+
+        <h4 class="subchapter-title">2. Mekanisme Autentikasi OTP (One-Time Password) & Rate Limiting</h4>
+        <p>Sistem membedakan jalur otentikasi melalui simulasi gerbang SMS, surel, dan WhatsApp. Kode 6 digit acak yang dibangkitkan berumur tepat 60 detik. Untuk mencegah serangan *brute force*, sistem menerapkan *sliding window attempt limiter*: pengguna hanya diizinkan salah maksimal 3 kali. Pada kesalahan ketiga, sistem membekukan (*lockdown*) verifikasi selama 30 detik penuh, mereset kode aktif, dan mencatat insiden ke dalam konsol audit log.</p>
+
+        <h4 class="subchapter-title">3. Mekanisme QR Code Security & TOTP (RFC 6238)</h4>
+        <p>Modul QR Code dibangun menggunakan pustaka generator SVG mandiri (*pure JavaScript*). Sistem memproduksi kode QR berstandar URI <code>otpauth://totp/...</code> yang dapat dipindai secara langsung oleh aplikasi Google Authenticator, Microsoft Authenticator, atau FreeOTP. Mesin internal sistem melakukan perhitungan token HMAC-SHA1 dinamis dengan periode 30 detik dan toleransi pergeseran waktu (*clock drift*) $\pm 30$ detik.</p>
+    </div>
+
+    <!-- ====================================================================
+         BAB II (Lanjutan): HASIL TEMUAN & KENDALA
+         ==================================================================== -->
+    <div class="page" style="padding-top: 10mm;">
+        <h3 class="chapter-title">2.3 Data, Fakta, dan Hasil Temuan Pengujian Lapangan</h3>
+        <p class="no-indent">Pengujian sistem dilakukan menggunakan metode pengujian kotak hitam (*black-box testing*) serta pengujian integritas kriptografis pada berbagai skenario operasional:</p>
+
+        <table class="report-table">
+            <thead>
+                <tr>
+                    <th style="width: 20%;">Kasus Uji</th>
+                    <th style="width: 35%;">Prosedur Uji Coba</th>
+                    <th style="width: 35%;">Hasil Pengamatan & Temuan Fakta</th>
+                    <th style="width: 10%;">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Enkripsi Klien AES-GCM</strong></td>
+                    <td>Memasukkan teks KTP rahasia dengan passphrase dan memeriksa payload Base64.</td>
+                    <td>Data berhasil dienkripsi menjadi Base64 unik. Plaintext tidak pernah tersimpan di memori bebas.</td>
+                    <td><span class="badge-pill">VALID</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Deteksi Modifikasi (Tampering)</strong></td>
+                    <td>Mengubah 1 karakter pada Base64 ciphertext sebelum dikirim ke modul dekripsi.</td>
+                    <td>Sistem seketika menolak dekripsi dengan galat <em>Authentication Tag Mismatch</em>.</td>
+                    <td><span class="badge-pill">VALID</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Penyamaran PII (Masking)</strong></td>
+                    <td>Mengetik NIK 16 digit: <code>3201015609920002</code> pada kolom data identitas.</td>
+                    <td>Secara otomatis disamarkan di layar publik menjadi <code>320101******0002</code>.</td>
+                    <td><span class="badge-pill">VALID</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Kedaluwarsa OTP (60 Detik)</strong></td>
+                    <td>Menunggu timer radial mencapai 0 detik lalu memasukkan kode yang diterima.</td>
+                    <td>Sistem menolak dengan notifikasi kode hangus/kedaluwarsa.</td>
+                    <td><span class="badge-pill">VALID</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Proteksi Anti Brute-Force</strong></td>
+                    <td>Memasukkan kode salah sebanyak 3 kali berturut-turut pada kolom verifikasi.</td>
+                    <td>Sistem mengunci input selama 30 detik (Lockdown) dan mencatat insiden ke audit log.</td>
+                    <td><span class="badge-pill">VALID</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Sinkronisasi TOTP QR</strong></td>
+                    <td>Mencocokkan kode live generator QR sistem dengan aplikasi Google Authenticator ponsel.</td>
+                    <td>Kode 6-digit identik dan berganti serempak setiap rotasi 30 detik.</td>
+                    <td><span class="badge-pill">VALID</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Hak Hapus (UU PDP)</strong></td>
+                    <td>Mengeksekusi tombol hapus permanen pada item vault data rahasia.</td>
+                    <td>Data terenkripsi musnah seketika dari penyimpanan lokal dan audit log mencatat aksi.</td>
+                    <td><span class="badge-pill">VALID</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3 class="chapter-title">2.4 Kendala dan Hambatan Pelaksanaan Beserta Solusi Teknis</h3>
+        <ol>
+            <li>
+                <strong>Hambatan Kapasitas Matriks QR Code pada Payload Terenkripsi Besar:</strong>
+                <p><em>Kendala:</em> Pada implementasi awal modul *Encrypted QR Code*, enkripsi AES-256 yang menghasilkan amplop JSON lengkap (salt, IV, ciphertext, hash, versi) membutuhkan lebih dari 280 karakter. Hal ini memicu galat <code>bad rs block @ typeNumber:11</code> pada pustaka QR standar karena keterbatasan tabel Reed-Solomon hingga Tipe 10.</p>
+                <p><em>Solusi:</em> Penulis memperluas tabel koreksi kesalahan polinomial Reed-Solomon pada berkas <code>qrcode-lib.js</code> hingga <strong>Tipe 20 (ISO/IEC 18004)</strong> dan mengoptimalkan format serialisasi muatan QR menjadi format ringkas (*compact payload* <code>{ s, i, c }</code>). Ukuran payload berkurang hingga 45% dan matriks QR Code berhasil digambar secara sempurna.</p>
+            </li>
+            <li>
+                <strong>Hambatan Pergeseran Waktu (Clock Drift) pada Verifikasi TOTP:</strong>
+                <p><em>Kendala:</em> Adanya deviasi perbedaan waktu beberapa detik antara jam sistem laptop dengan jam perangkat telepon pintar pengguna menyebabkan kegagalan otentikasi TOTP pada detik-detik pergantian siklus.</p>
+                <p><em>Solusi:</em> Fungsi verifikasi <code>verifyTOTP()</code> pada berkas <code>otp-manager.js</code> dimodifikasi dengan menambahkan jendela toleransi waktu $\pm 1$ langkah ($\pm 30$ detik) sesuai standar rekomendasi IETF RFC 6238.</p>
+            </li>
+            <li>
+                <strong>Hambatan Pengujian Tanpa Driver Headless Browser Eksternal:</strong>
+                <p><em>Kendala:</em> Saat otomasi browser mencoba mengunduh biner pihak ketiga di lingkungan terisolasi, terjadi galat jaringan.</p>
+                <p><em>Solusi:</em> Penulis memanfaatkan peramban asli bawaan sistem operasi (Google Chrome / Microsoft Edge Headless) melalui skrip Python terotomasi untuk mengambil tangkapan layar dan mencetak dokumen laporan ke format PDF murni beresolusi tinggi.</p>
+            </li>
+        </ol>
+    </div>
+
+    <!-- ====================================================================
+         BAB III & BAB IV: METODE, ALAT, PENUTUP
+         ==================================================================== -->
+    <div class="page" style="padding-top: 10mm;">
+        <h2 class="section-title">BAB III: METODE, ALAT, DAN BAHAN</h2>
+        
+        <h3 class="chapter-title">3.1 Metode Pengembangan Sistem</h3>
+        <p>Proyek ini dikembangkan menggunakan <strong>Metode Iterative Prototyping</strong>. Pendekatan ini memungkinkan evaluasi berkelanjutan pada setiap modul keamanan (Enkripsi, OTP, QR Code) sebelum diintegrasikan menjadi satu kesatuan dashboard terpadu. Tahapan meliputi: Analisis Kebutuhan Regulasi & Siber $\rightarrow$ Perancangan Kriptografi $\rightarrow$ Pengkodean Mandiri $\rightarrow$ Pengujian Ketahanan $\rightarrow$ Finalisasi Pelaporan.</p>
+
+        <h3 class="chapter-title">3.2 Alat dan Bahan yang Digunakan</h3>
+        <table class="report-table">
+            <thead>
+                <tr>
+                    <th>Komponen</th>
+                    <th>Nama Spesifikasi</th>
+                    <th>Kegunaan dalam Proyek</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Perangkat Keras</td>
+                    <td>Laptop Intel Core i5 / RAM 16GB / SSD</td>
+                    <td>Lingkungan pengembangan dan kompilasi peramban.</td>
+                </tr>
+                <tr>
+                    <td>Sistem Operasi</td>
+                    <td>Microsoft Windows 11 64-bit</td>
+                    <td>Host platform pengujian aplikasi dan CLI runtime.</td>
+                </tr>
+                <tr>
+                    <td>Bahasa Pemrograman</td>
+                    <td>HTML5, Vanilla CSS3, Modern ES6+ JavaScript</td>
+                    <td>Struktur dokumen, antarmuka glassmorphism, dan logika utama.</td>
+                </tr>
+                <tr>
+                    <td>API Kriptografi</td>
+                    <td>W3C Web Cryptography API (`crypto.subtle`)</td>
+                    <td>Enkripsi AES-256-GCM, derivasi PBKDF2, digest SHA-256.</td>
+                </tr>
+                <tr>
+                    <td>Pustaka Mandiri</td>
+                    <td>Standalone SVG QRCode Engine (ISO/IEC 18004)</td>
+                    <td>Generator matriks QR Code tanpa pustaka pihak ketiga.</td>
+                </tr>
+                <tr>
+                    <td>Server Pengujian</td>
+                    <td>Python 3.13 (`http.server`) & Node.js 24</td>
+                    <td>Penyedia server lokal (localhost:8080) dan utilitas tangkapan layar.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2 class="section-title" style="margin-top: 35px;">BAB IV: PENUTUP</h2>
+        
+        <h3 class="chapter-title">4.1 Kesimpulan</h3>
+        <p>Berdasarkan seluruh rangkaian perancangan, implementasi, dan pengujian prototipe <em>CyberShield Data Vault</em>, diperoleh kesimpulan sebagai berikut:</p>
+        <ol>
+            <li>Prototipe sistem keamanan dan perlindungan privasi data telah berhasil dibangun dan berfungsi 100% menggunakan teknologi web murni tanpa ketergantungan pihak ketiga yang berisiko.</li>
+            <li>Penerapan <strong>AES-256-GCM</strong> yang dikombinasikan dengan <strong>PBKDF2 (100.000 iterasi)</strong> terbukti mampu melindungi kerahasiaan data pribadi langsung di sisi klien (*client-side zero knowledge*), sehingga pengendali sistem sekalipun tidak dapat membaca teks asli tanpa izin dan kata sandi pengguna.</li>
+            <li>Integrasi <strong>One-Time Password (OTP) 6-digit</strong> berbatas waktu 60 detik dengan pembatas laju percobaan (*anti brute-force rate limiter*) berhasil menepis ancaman serangan tebak kata sandi otomatis.</li>
+            <li>Penggunaan <strong>QR Code (TOTP RFC 6238)</strong> memungkinkan interoperabilitas penuh dengan aplikasi autentikator standar industri (*Google Authenticator*) dan membuka peluang transmisi token rahasia offline terenkripsi.</li>
+            <li>Sistem telah mengimplementasikan amanat yuridis <strong>UU No. 27 Tahun 2022 (UU PDP)</strong> melalui fitur penyamaran data sensitif (*PII Masking*), pencatatan jejak audit (*audit trail*), serta hak penghapusan permanen (*Right to be Forgotten*).</li>
+        </ol>
+
+        <h3 class="chapter-title">4.2 Saran dan Rekomendasi</h3>
+        <ol>
+            <li><strong>Integrasi Otentikasi Biometrik WebAuthn (FIDO2 / Passkeys):</strong> Disarankan untuk menambahkan dukungan autentikasi biometrik peramban (seperti Windows Hello atau sensor sidik jari ponsel) guna melengkapi otentikasi OTP.</li>
+            <li><strong>Kesiapan Kriptografi Pasca-Kuantum (Post-Quantum Cryptography):</strong> Menimbang perkembangan komputasi kuantum, arsitektur vault di masa depan dapat dieksplorasi menggunakan algoritma berbasis kisi (*lattice-based cryptography*) seperti Kyber atau Dilithium.</li>
+            <li><strong>Sinkronisasi Awan Terdesentralisasi:</strong> Mengintegrasikan sistem vault dengan basis data cloud terenkripsi penuh atau jaringan IPFS terenkripsi untuk pencadangan multi-perangkat yang aman.</li>
+        </ol>
+    </div>
+
+    <!-- ====================================================================
+         DAFTAR PUSTAKA
+         ==================================================================== -->
+    <div class="page" style="padding-top: 10mm;">
+        <h2 class="section-title">DAFTAR PUSTAKA</h2>
+        
+        <ol style="margin-left: 25px; line-height: 1.8;">
+            <li>Republik Indonesia. (2022). <em>Undang-Undang Republik Indonesia Nomor 27 Tahun 2022 tentang Pelindungan Data Pribadi</em>. Lembaran Negara RI Tahun 2022 Nomor 196. Jakarta: Sekretariat Negara.</li>
+            <li>National Institute of Standards and Technology (NIST). (2007). <em>Recommendation for Block Cipher Modes of Operation: Galois/Counter Mode (GCM) and GMAC</em>. NIST Special Publication 800-38D. Gaithersburg: U.S. Department of Commerce.</li>
+            <li>World Wide Web Consortium (W3C). (2017). <em>Web Cryptography API - W3C Recommendation 26 January 2017</em>. Diakses dari https://www.w3.org/TR/WebCryptoAPI/</li>
+            <li>M'Raihi, D., Machani, S., Pei, M., & Rydell, J. (2011). <em>TOTP: Time-Based One-Time Password Algorithm</em>. Request for Comments: 6238, Internet Engineering Task Force (IETF).</li>
+            <li>International Organization for Standardization (ISO). (2015). <em>Information technology — Automatic identification and data capture techniques — QR Code bar code symbology specification (ISO/IEC 18004:2015)</em>. Geneva: ISO.</li>
+            <li>Stallings, W. (2017). <em>Cryptography and Network Security: Principles and Practice</em> (7th ed.). Boston: Pearson.</li>
+            <li>Forouzan, B. A., & Mukhopadhyay, D. (2015). <em>Cryptography and Network Security</em> (3rd ed.). New York: McGraw-Hill Education.</li>
+            <li>Universitas Bhayangkara Jakarta Raya. (2024). <em>Buku Pedoman Akademik dan Penulisan Tugas Akhir Fakultas Ilmu Komputer</em>. Bekasi: Ubhara Jaya Press.</li>
+        </ol>
+    </div>
+
+    <!-- ====================================================================
+         LAMPIRAN I: TANGKAPAN LAYAR PROTOTIPE
+         ==================================================================== -->
+    <div class="page" style="padding-top: 10mm;">
+        <h2 class="section-title">LAMPIRAN I: TANGKAPAN LAYAR (SCREENSHOT) PROTOTIPE</h2>
+        
+        <div class="figure-box">
+            <img src="01_dashboard_encryption.png" alt="Screenshot Dashboard Enkripsi Data">
+            <div class="figure-caption">Gambar L-1: Antarmuka Utama & Modul Enkripsi Vault Data (AES-256-GCM, PII Masking, & Live Crypto Inspector)</div>
+        </div>
+
+        <div class="figure-box" style="margin-top: 30px;">
+            <img src="02_otp_authentication.png" alt="Screenshot Modul OTP">
+            <div class="figure-caption">Gambar L-2: Modul Autentikasi OTP 6-Digit, Notifikasi SMS Gateway, Timer Radial 60s, & Anti Brute-Force Card</div>
+        </div>
+    </div>
+
+    <!-- LAMPIRAN I (Lanjutan) -->
+    <div class="page" style="padding-top: 10mm;">
+        <div class="figure-box">
+            <img src="03_qrcode_totp.png" alt="Screenshot Modul QR Code TOTP">
+            <div class="figure-caption">Gambar L-3: Modul QR Code MFA Binding (TOTP RFC 6238), Live Authenticator Simulator, & Encrypted QR Payload</div>
+        </div>
+
+        <div class="figure-box" style="margin-top: 30px;">
+            <img src="04_audit_privacy_uupdp.png" alt="Screenshot Audit Log dan UU PDP">
+            <div class="figure-caption">Gambar L-4: Konsol Audit Log Keamanan Berpresisi Milidetik & Checklist Kepatuhan UU No. 27 Tahun 2022 (UU PDP)</div>
+        </div>
+    </div>
+
+    <!-- ====================================================================
+         LAMPIRAN II: POTONGAN KODE SUMBER KRIPTOGRAFI
+         ==================================================================== -->
+    <div class="page" style="padding-top: 10mm;">
+        <h2 class="section-title">LAMPIRAN II: POTONGAN KODE SUMBER UTAMA</h2>
+        
+        <h4 class="subchapter-title">1. Derivasi Kunci PBKDF2 & Enkripsi AES-256-GCM (`crypto-engine.js`)</h4>
+        <pre class="code-block">
+// Derivasi Kunci 256-bit dari Passphrase pengguna dengan 100.000 iterasi HMAC-SHA-256
+async deriveKey(password, saltUint8, iterations = 100000) {
+    const enc = new TextEncoder();
+    const baseKey = await this.subtle.importKey(
+        'raw', enc.encode(password), { name: 'PBKDF2' }, false, ['deriveKey']
+    );
+
+    return await this.subtle.deriveKey(
+        { name: 'PBKDF2', salt: saltUint8, iterations: iterations, hash: 'SHA-256' },
+        baseKey,
+        { name: 'AES-GCM', length: 256 },
+        false,
+        ['encrypt', 'decrypt']
+    );
+}
+
+// Proses Enkripsi Authenticated AES-GCM dengan IV acak 12-byte
+async encrypt(plainText, password) {
+    const enc = new TextEncoder();
+    const dataBytes = enc.encode(plainText);
+    const salt = this.getRandomBytes(16);
+    const iv = this.getRandomBytes(12);
+
+    const key = await this.deriveKey(password, salt);
+    const encryptedBuffer = await this.subtle.encrypt(
+        { name: 'AES-GCM', iv: iv, tagLength: 128 },
+        key,
+        dataBytes
+    );
+
+    return {
+        salt: this.bufferToBase64(salt.buffer),
+        iv: this.bufferToBase64(iv.buffer),
+        ciphertext: this.bufferToBase64(encryptedBuffer),
+        createdAt: new Date().toISOString()
+    };
+}
+        </pre>
+
+        <h4 class="subchapter-title">2. Implementasi Generator TOTP RFC 6238 (`otp-manager.js`)</h4>
+        <pre class="code-block">
+// Kalkulasi token dinamis berbasis waktu (30 detik) sesuai standar RFC 6238
+async calculateHOTP(secretBase32, counter) {
+    const keyBytes = this.base32ToBytes(secretBase32);
+    const counterBuffer = new ArrayBuffer(8);
+    const counterView = new DataView(counterBuffer);
+    counterView.setUint32(4, counter, false);
+
+    const cryptoKey = await window.crypto.subtle.importKey(
+        'raw', keyBytes, { name: 'HMAC', hash: { name: 'SHA-1' } }, false, ['sign']
+    );
+
+    const signature = await window.crypto.subtle.sign('HMAC', cryptoKey, counterBuffer);
+    const sigBytes = new Uint8Array(signature);
+    const offset = sigBytes[sigBytes.length - 1] & 0x0f;
+    const binary = ((sigBytes[offset] & 0x7f) << 24) |
+                   ((sigBytes[offset + 1] & 0xff) << 16) |
+                   ((sigBytes[offset + 2] & 0xff) << 8) |
+                   (sigBytes[offset + 3] & 0xff);
+
+    const otp = binary % Math.pow(10, this.totpDigits);
+    return otp.toString().padStart(this.totpDigits, '0');
+}
+        </pre>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,6 @@
+# Temporary test files & browser data
+.chromedata/
+*.tmp
+test.pdf
+test.png
+__pycache__/
